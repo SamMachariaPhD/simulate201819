@@ -1,4 +1,4 @@
-import fileinput, sys, shutil, os, time, socket
+import fileinput, sys, shutil, os, time, socket, subprocess
 
 pc_hostname = socket.gethostname()
 date_today = time.strftime("%d-%m-%Y")
@@ -58,7 +58,7 @@ os.mkdir(dir_5)
 
 os.chdir(current_path)
 
-files = ['file1.f90', 'file2.f90', 'file3.f90']
+files = ['MotilityAssayActin2MotorsParameters_v3.f90', 'MotilityAssayConfinements_v1.f90', 'MotilityAssayForceForceFunctions_v2.f90', 'MotilityAssaySubstrateDeformation_v2.f90', 'mt.f90', 'MotilityAssayActin2MotorsMain_v6.f90', 'autocomp_py.sh', 'autorun_py.sh']
 for f in files:
     shutil.copy(f, dir_name+'/'+dir_1)
     shutil.copy(f, dir_name+'/'+dir_2)
@@ -68,78 +68,100 @@ for f in files:
 print ("=> Files successfully copied: %s " % files)
 
 os.chdir(dir_name+'/'+dir_1)
-main_file = "file1.f90"
+param_file = "MotilityAssayActin2MotorsParameters_v3.f90"
 # replace all occurrences of 'ATP = 3000.0_DP' with 'ATP = 1000.0_DP' and insert a line after the 5th
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Species1Ratio = 0.60', 'Species1Ratio = '+str(species_ratio_run1)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('NumBeads = 13', 'NumBeads = '+str(beads_number_run1)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('ATP = 2000.0', 'ATP = '+str(ATP_value_run1)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Motor_Density = 3000.0', 'Motor_Density = '+str(MD_value_run1)))
     # replace 'ATP = 3000.0_DP' and write
     #if i == 4: sys.stdout.write('\n')  # write a blank line after the 5th line
+time.sleep(1)
 print ("=> Files successfully updated: %s " % dir_1)
-os.system("gfortran -o file1 file1.f90")
-os.system("gfortran -o file2 file2.f90")
-os.system("gfortran -o file3 file3.f90")
-print ("=> Program successfully compiled: %s " % main_file)
-os.system("./file1")
-os.system("./file2")
-os.system("./file3")
-print ("=> Program successfully run. Done: %s " % main_file)
+subprocess.call("./autocomp_py.sh", shell=True)
+time.sleep(1)
+print ("=> Program successfully compiled: %s " % param_file)
+subprocess.call("./autorun_py.sh", shell=True)
+print ("=> Program successfully run. Done: %s " % param_file)
 os.chdir(current_path)
 
 os.chdir(dir_name+'/'+dir_2)
-main_file = "file1.f90"
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+param_file = "MotilityAssayActin2MotorsParameters_v3.f90"
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Species1Ratio = 0.60', 'Species1Ratio = '+str(species_ratio_run2)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('NumBeads = 13', 'NumBeads = '+str(beads_number_run2)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('ATP = 2000.0', 'ATP = '+str(ATP_value_run2)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Motor_Density = 3000.0', 'Motor_Density = '+str(MD_value_run2)))
+time.sleep(1)
 print ("=> Files successfully updated: %s " % dir_2)
+subprocess.call("./autocomp_py.sh", shell=True)
+time.sleep(1)
+print ("=> Program successfully compiled: %s " % param_file)
+subprocess.call("./autorun_py.sh", shell=True)
+print ("=> Program successfully run. Done: %s " % param_file)
 os.chdir(current_path)
 
 os.chdir(dir_name+'/'+dir_3)
-main_file = "file1.f90"
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+param_file = "MotilityAssayActin2MotorsParameters_v3.f90"
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Species1Ratio = 0.60', 'Species1Ratio = '+str(species_ratio_run3)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('NumBeads = 13', 'NumBeads = '+str(beads_number_run3)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('ATP = 2000.0', 'ATP = '+str(ATP_value_run3)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Motor_Density = 3000.0', 'Motor_Density = '+str(MD_value_run3)))
+time.sleep(1)
 print ("=> Files successfully updated: %s " % dir_3)
+subprocess.call("./autocomp_py.sh", shell=True)
+time.sleep(1)
+print ("=> Program successfully compiled: %s " % param_file)
+subprocess.call("./autorun_py.sh", shell=True)
+print ("=> Program successfully run. Done: %s " % param_file)
 os.chdir(current_path)
 
 os.chdir(dir_name+'/'+dir_4)
-main_file = "file1.f90"
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+param_file = "MotilityAssayActin2MotorsParameters_v3.f90"
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Species1Ratio = 0.60', 'Species1Ratio = '+str(species_ratio_run4)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('NumBeads = 13', 'NumBeads = '+str(beads_number_run4)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('ATP = 2000.0', 'ATP = '+str(ATP_value_run4)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Motor_Density = 3000.0', 'Motor_Density = '+str(MD_value_run4)))
+time.sleep(1)
 print ("=> Files successfully updated: %s " % dir_4)
+subprocess.call("./autocomp_py.sh", shell=True)
+time.sleep(1)
+print ("=> Program successfully compiled: %s " % param_file)
+subprocess.call("./autorun_py.sh", shell=True)
+print ("=> Program successfully run. Done: %s " % param_file)
 os.chdir(current_path)
 
 os.chdir(dir_name+'/'+dir_5)
-main_file = "file1.f90"
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+param_file = "MotilityAssayActin2MotorsParameters_v3.f90"
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Species1Ratio = 0.60', 'Species1Ratio = '+str(species_ratio_run5)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('NumBeads = 13', 'NumBeads = '+str(beads_number_run5)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('ATP = 2000.0', 'ATP = '+str(ATP_value_run5)))
-for i, line in enumerate(fileinput.input(main_file, inplace=1)):
+for i, line in enumerate(fileinput.input(param_file, inplace=1)):
     sys.stdout.write(line.replace('Motor_Density = 3000.0', 'Motor_Density = '+str(MD_value_run5)))
+time.sleep(1)
 print ("=> Files successfully updated: %s " % dir_5)
+subprocess.call("./autocomp_py.sh", shell=True)
+time.sleep(1)
+print ("=> Program successfully compiled: %s " % param_file)
+subprocess.call("./autorun_py.sh", shell=True)
+print ("=> Program successfully run. Done: %s " % param_file)
 os.chdir(current_path)
 
