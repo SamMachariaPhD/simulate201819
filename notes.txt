@@ -1,0 +1,5 @@
+> In '~/.bashrc' use 'alias' to change command 'python' from running python2 to running python3.
+
+> Copy the 9 files to some new folder
+
+> Run 'python simulate.py'
