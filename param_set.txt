@@ -1,0 +1,15 @@
+0.1,13,2000,3000
+0.2,13,2000,3000
+0.3,13,2000,3000
+0.4,13,2000,3000
+0.5,13,2000,3000
+
+#-------------------------DO NOT DELETE THIS----------------------------#
+#   Please set (ABOVE) the 4 parameters for all simulations (each line) #
+#   Enter: species_ratio,beads_number,ATP_value,MD_value e.g.:          #
+#   0.9,13,2000,3000                                                    #
+#   Do not skip a line above!                                           #
+#   Separate parameters with ',' only                                   #
+#   Each line rep. 1 simulation parameters                              #
+#   Regards, Sam.                                                       #
+#-----------------------------------------------------------------------#
