@@ -12,7 +12,7 @@ main_file = "MotilityAssayActin2MotorsMain_v6.f90"
 
 pc_hostname = socket.gethostname()
 date_today = time.strftime("%d-%m-%Y")
-dir_name = date_today+pc_hostname
+dir_name = date_today+pc_hostname #dynamic folder based on date and PC used
 
 current_path = os.getcwd()  
 
@@ -38,10 +38,10 @@ simulations_counter = 0
 while simulation_runs > 0:
     params = open('param_set.txt')
     read_params = params.readlines()
-    species_ratio, beads_number, ATP_value, MD_value = map(float,read_params[simulations_counter].split(','))
+    species_ratio, beads_number, ATP_value, MD_value = map(float,read_params[simulations_counter].split(',')) #dynamic parameters based on .txt file
     params.close()
     #species_ratio, beads_number, ATP_value, MD_value = map(float,input().split(',')) #Bad. I have to enter each param.
-    new_dir = 'R'+str(species_ratio)+'B'+str(beads_number)+'ATP'+str(ATP_value)+'MD'+str(MD_value)
+    new_dir = 'R'+str(species_ratio)+'B'+str(beads_number)+'ATP'+str(ATP_value)+'MD'+str(MD_value) #dynamic folder name
     os.chdir(dir_name)
     os.mkdir(new_dir)
     #print ("=> New folder successfully created: %s " % new_dir) #print outs for debugging
@@ -72,3 +72,59 @@ while simulation_runs > 0:
 
 
 print("\n=> All the %s simulations are successfully completed.\nDone!\n" %simulations)
+
+#-------------------------------PLOTTING THE OUTPUT DATA--------------------------------------------
+plot_runs = simulations
+plot_counter = 0
+plot_file = ['plot.py']
+
+try:
+    while plot_runs > 0:
+        params = open('param_set.txt')
+        read_params = params.readlines()
+        species_ratio, beads_number, ATP_value, MD_value = map(float,read_params[plot_counter].split(','))
+        params.close()
+        new_dir = 'R'+str(species_ratio)+'B'+str(beads_number)+'ATP'+str(ATP_value)+'MD'+str(MD_value)
+        print("\n=> Plotting results for %s " %new_dir)
+        for f in plot_file:
+            shutil.copy(f, dir_name+'/'+new_dir)
+        os.chdir(dir_name+'/'+new_dir)
+        os.system('python3 plot.py')
+        plot_runs = plot_runs-1
+        plot_counter = plot_counter+1
+        os.chdir(current_path)
+        time.sleep(1)
+except (OSError, RuntimeError, TypeError, NameError):
+    print("Plotting script has an Error. ")
+    print("Plotting not completed. ")
+    pass
+
+#------------------------------------------------------------------------------------------------------
+
+#-------------------------------MAKE FILM FROM OUTPUT DATA--------------------------------------------
+film_runs = simulations
+film_counter = 0
+film_file = ['film.py']
+
+try:
+    while film_runs > 0:
+        params = open('param_set.txt')
+        read_params = params.readlines()
+        species_ratio, beads_number, ATP_value, MD_value = map(float,read_params[film_counter].split(','))
+        params.close()
+        new_dir = 'R'+str(species_ratio)+'B'+str(beads_number)+'ATP'+str(ATP_value)+'MD'+str(MD_value)
+        print("\n=> Making film for %s " %new_dir)
+        for f in film_file:
+            shutil.copy(f, dir_name+'/'+new_dir)
+        os.chdir(dir_name+'/'+new_dir)
+        os.system('pvpython film.py')
+        film_runs = film_runs-1
+        film_counter = film_counter+1
+        os.chdir(current_path)
+        time.sleep(1)
+except (OSError, RuntimeError, TypeError, NameError):
+    print("Film script has an Error. ")
+    print("Film not completed. ")
+    pass
+
+#------------------------------------------------------------------------------------------------------
