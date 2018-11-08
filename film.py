@@ -1,5 +1,12 @@
+# prepared by Sam. feel free to consult (sirmaxford@gmail.com)
 import fileinput, sys, shutil, os, time, socket, subprocess, glob
 from paraview.simple import *
+import pandas as pd
+
+columns = ['time', 'x_tip', 'y_tip']
+df = pd.read_csv('TipXY_A001.txt', names=columns, delim_whitespace=True)
+x_max = df['x_tip'].max(); x_min = df['x_tip'].min()
+y_max = df['y_tip'].max(); y_min = df['y_tip'].min()
 
 results_dir = 'FILM'
 
@@ -10,9 +17,9 @@ except OSError:
 else:  
     print ("=> Successfully created %s directory." % results_dir)
 
-Filament_file_list = glob.glob('Filament**.vtk') # all files starting with 'Filament' and ending with '.vtk'
-MotorSpecie1_file_list = glob.glob('MotorSpecie1**.vtk')
-MotorSpecie2_file_list = glob.glob('MotorSpecie2**.vtk')
+Filament_file_list = glob.glob('Filament**0.vtk') # all files starting with 'Filament' and ending with '.vtk'
+MotorSpecie1_file_list = glob.glob('MotorSpecie1**0.vtk')
+MotorSpecie2_file_list = glob.glob('MotorSpecie2**0.vtk')
 
 filament_files = sorted(Filament_file_list, key=lambda x:x[-16:]) # sort by the last 16 characters of the file name
 MotorSpecie1_files = sorted(MotorSpecie1_file_list, key=lambda x:x[-16:])
@@ -70,7 +77,7 @@ annotateTime1Display = Show(annotateTime1, renderView1)
 #renderView1.CameraPosition = [5.566566450844984, -3.271004214234651, 18.733021468562196]
 #renderView1.CameraFocalPoint = [5.566566450844984, -3.271004214234651, 0.012500000186264515]
 # reset view to fit data
-renderView1.ResetCamera(1,11.5,-7,0.0,0.0,0.0)
+renderView1.ResetCamera(0.0,x_max,y_min,0.0,x_min,y_max)
 renderView1.CameraParallelScale = 1.5
 
 # save animation images/movie
