@@ -7,7 +7,9 @@ font = {'family': 'serif',
         'weight': 'normal',
         'size': 14,
         }
+
 results_dir = 'PLOTS'
+plot_name = 'actin_graph'
 
 try:  
     os.mkdir(results_dir)
@@ -35,7 +37,7 @@ plt.text(6, 7, 'Vel_SD = ', fontdict=font); plt.text(8, 7, '%.5f'%vSD, fontdict=
 plt.plot(df['x_tip'],df['y_tip'], label='Filament', color='green', marker='o', linestyle='dashed', linewidth=2, markersize=7)
 plt.xlabel('X Tip', fontdict=font); plt.ylabel('Y Tip', fontdict=font)
 plt.title('Actin Filament Movement'); plt.legend(loc='upper left'); plt.grid()
-plt.savefig(results_dir+'/actin_graph.svg', format='svg', dpi=1200)
-plt.savefig(results_dir+'/actin_graph.png', format='png')
+plt.savefig(results_dir+'/'+plot_name+'.svg', format='svg', dpi=1200)
+plt.savefig(results_dir+'/'+plot_name+'.png', format='png')
 
 print ("=> %s successfully saved. Done!\n" %results_dir)

@@ -77,6 +77,7 @@ print("\n=> All the %s simulations are successfully completed.\nDone!\n" %simula
 plot_runs = simulations
 plot_counter = 0
 plot_file = ['plot.py']
+ploting_file = "plot.py"
 
 try:
     while plot_runs > 0:
@@ -89,6 +90,8 @@ try:
         for f in plot_file:
             shutil.copy(f, dir_name+'/'+new_dir)
         os.chdir(dir_name+'/'+new_dir)
+        for i, line in enumerate(fileinput.input(ploting_file, inplace=1)):
+            sys.stdout.write(line.replace("'actin_graph'", "'"+new_dir+"'"))
         os.system('python3 plot.py')
         plot_runs = plot_runs-1
         plot_counter = plot_counter+1
@@ -105,6 +108,7 @@ except (OSError, RuntimeError, TypeError, NameError):
 film_runs = simulations
 film_counter = 0
 film_file = ['film.py']
+filming_file = "film.py"
 
 try:
     while film_runs > 0:
@@ -117,6 +121,8 @@ try:
         for f in film_file:
             shutil.copy(f, dir_name+'/'+new_dir)
         os.chdir(dir_name+'/'+new_dir)
+        for i, line in enumerate(fileinput.input(filming_file, inplace=1)):
+            sys.stdout.write(line.replace("'filament_film'", "'"+new_dir+"'"))
         os.system('pvpython film.py')
         film_runs = film_runs-1
         film_counter = film_counter+1

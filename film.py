@@ -9,6 +9,7 @@ x_max = df['x_tip'].max(); x_min = df['x_tip'].min()
 y_max = df['y_tip'].max(); y_min = df['y_tip'].min()
 
 results_dir = 'FILM'
+film_name = 'filament_film'
 
 try:  
     os.mkdir(results_dir)
@@ -81,4 +82,4 @@ renderView1.ResetCamera(0.0,x_max,y_min,0.0,x_min,y_max)
 renderView1.CameraParallelScale = 1.5
 
 # save animation images/movie
-WriteAnimation(results_dir+'/filament_film.avi', Magnification=1, FrameRate=7.0, Quality=70, Compression=True)
+WriteAnimation(results_dir+'/'+film_name+'.avi', Magnification=1, FrameRate=7.0, Quality=70, Compression=True)
