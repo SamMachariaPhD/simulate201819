@@ -59,4 +59,11 @@
 > Run '$ python3 plot.py' to do plot.
 > Run '$ pvpython film.py' to make a film.
 
+
+
+#====================ADDITIONAL NOTES===================
+
+> Converting jupyter notebook to html file:
+    $ jupyter nbconvert --to html mynotebook.ipynb
+
 #----------------------END--------------------

@@ -9,7 +9,7 @@ font = {'family': 'serif',
         }
 
 results_dir = 'PLOTS'
-plot_name = 'actin_graph'
+plot_name = 'Graph'
 
 try:  
     os.mkdir(results_dir)
@@ -42,7 +42,7 @@ plt.text(x1, y1, 'Av_Vel = ', fontdict=font); plt.text(x2, y1, '%.5f'%Av_vel, fo
 plt.text(x1, y2, 'Vel_SD = ', fontdict=font); plt.text(x2, y2, '%.5f'%vSD, fontdict=font)
 plt.plot(df['x_tip'],df['y_tip'], label='Filament', color='green', marker='o', linestyle='dashed', linewidth=2, markersize=7)
 plt.xlabel('X Tip', fontdict=font); plt.ylabel('Y Tip', fontdict=font)
-plt.title('Actin Filament Movement'); plt.legend(loc='upper left'); plt.grid()
+plt.title('Actin Filament Movement '+plot_name); plt.legend(loc='upper left'); plt.grid()
 plt.savefig(results_dir+'/'+plot_name+'.svg', format='svg', dpi=1200)
 plt.savefig(results_dir+'/'+plot_name+'.png', format='png')
 
