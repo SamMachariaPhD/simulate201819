@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+from termcolor import colored
 
 font = {'family': 'serif',
         'color':  'darkred',
@@ -21,12 +22,28 @@ df01 = conf01_df.loc[conf01_df['z'] <= attach_lim]
 #conf01_df.to_csv('testconf.csv', encoding='utf-8', index=False)
 print("Conf0.1 shape after filter: ", df01.shape)
 
+conf15 = pd.read_csv('Conformation_A001_r0.15.txt', names=conf_names, delim_whitespace=True)
+#conf015 = conf15.drop(columns=['beads'])
+conf015 = conf15.iloc[0::13,:]
+conf015_df = conf015.reset_index(drop=True)
+print("Conf0.15 shape before filter: ", conf015.shape)
+df015 = conf015_df.loc[conf015_df['z'] <= attach_lim]
+#conf015_df.to_csv('testconf.csv', encoding='utf-8', index=False)
+print("Conf0.15 shape after filter: ", df015.shape)
+
 conf2 = pd.read_csv('Conformation_A001_r0.2.txt', names=conf_names, delim_whitespace=True)
 conf02 = conf2.iloc[0::13,:]
 conf02_df = conf02.reset_index(drop=True)
 print("Conf0.2 shape before filter: ", conf02.shape)
 df02 = conf02_df.loc[conf02_df['z'] <= attach_lim]
 print("Conf0.2 shape after filter: ", df02.shape)
+
+conf25 = pd.read_csv('Conformation_A001_r0.25.txt', names=conf_names, delim_whitespace=True)
+conf025 = conf25.iloc[0::13,:]
+conf025_df = conf025.reset_index(drop=True)
+print("Conf0.25 shape before filter: ", conf025.shape)
+df025 = conf025_df.loc[conf025_df['z'] <= attach_lim]
+print("Conf0.25 shape after filter: ", df025.shape)
 
 conf3 = pd.read_csv('Conformation_A001_r0.3.txt', names=conf_names, delim_whitespace=True)
 conf03 = conf3.iloc[0::13,:]
@@ -35,12 +52,26 @@ print("Conf0.3 shape before filter: ", conf03.shape)
 df03 = conf03_df.loc[conf03_df['z'] <= attach_lim]
 print("Conf0.3 shape after filter: ", df03.shape)
 
+conf35 = pd.read_csv('Conformation_A001_r0.35.txt', names=conf_names, delim_whitespace=True)
+conf035 = conf35.iloc[0::13,:]
+conf035_df = conf035.reset_index(drop=True)
+print("Conf0.35 shape before filter: ", conf035.shape)
+df035 = conf035_df.loc[conf035_df['z'] <= attach_lim]
+print("Conf0.35 shape after filter: ", df035.shape)
+
 conf4 = pd.read_csv('Conformation_A001_r0.4.txt', names=conf_names, delim_whitespace=True)
 conf04 = conf4.iloc[0::13,:]
 conf04_df = conf04.reset_index(drop=True)
 print("Conf0.4 shape before filter: ", conf04.shape)
 df04 = conf04_df.loc[conf04_df['z'] <= attach_lim]
 print("Conf0.4 shape after filter: ", df04.shape)
+
+conf45 = pd.read_csv('Conformation_A001_r0.45.txt', names=conf_names, delim_whitespace=True)
+conf045 = conf45.iloc[0::13,:]
+conf045_df = conf045.reset_index(drop=True)
+print("Conf0.45 shape before filter: ", conf045.shape)
+df045 = conf045_df.loc[conf045_df['z'] <= attach_lim]
+print("Conf0.45 shape after filter: ", df045.shape)
 
 conf5 = pd.read_csv('Conformation_A001_r0.5.txt', names=conf_names, delim_whitespace=True)
 conf05 = conf5.iloc[0::13,:]
@@ -49,12 +80,26 @@ print("Conf0.5 shape before filter: ", conf05.shape)
 df05 = conf05_df.loc[conf05_df['z'] <= attach_lim]
 print("Conf0.5 shape after filter: ", df05.shape)
 
+conf55 = pd.read_csv('Conformation_A001_r0.55.txt', names=conf_names, delim_whitespace=True)
+conf055 = conf55.iloc[0::13,:]
+conf055_df = conf055.reset_index(drop=True)
+print("Conf0.55 shape before filter: ", conf055.shape)
+df055 = conf055_df.loc[conf055_df['z'] <= attach_lim]
+print("Conf0.55 shape after filter: ", df055.shape)
+
 conf6 = pd.read_csv('Conformation_A001_r0.6.txt', names=conf_names, delim_whitespace=True)
 conf06 = conf6.iloc[0::13,:]
 conf06_df = conf06.reset_index(drop=True)
 print("Conf0.6 shape before filter: ", conf06.shape)
 df06 = conf06_df.loc[conf06_df['z'] <= attach_lim]
 print("Conf0.6 shape after filter: ", df06.shape)
+
+conf65 = pd.read_csv('Conformation_A001_r0.65.txt', names=conf_names, delim_whitespace=True)
+conf065 = conf65.iloc[0::13,:]
+conf065_df = conf065.reset_index(drop=True)
+print("Conf0.65 shape before filter: ", conf065.shape)
+df065 = conf065_df.loc[conf065_df['z'] <= attach_lim]
+print("Conf0.65 shape after filter: ", df065.shape)
 
 conf7 = pd.read_csv('Conformation_A001_r0.7.txt', names=conf_names, delim_whitespace=True)
 conf07 = conf7.iloc[0::13,:]
@@ -63,6 +108,13 @@ print("Conf0.7 shape before filter: ", conf07.shape)
 df07 = conf07_df.loc[conf07_df['z'] <= attach_lim]
 print("Conf0.7 shape after filter: ", df07.shape)
 
+conf75 = pd.read_csv('Conformation_A001_r0.75.txt', names=conf_names, delim_whitespace=True)
+conf075 = conf75.iloc[0::13,:]
+conf075_df = conf075.reset_index(drop=True)
+print("Conf0.75 shape before filter: ", conf075.shape)
+df075 = conf075_df.loc[conf075_df['z'] <= attach_lim]
+print("Conf0.75 shape after filter: ", df075.shape)
+
 conf8 = pd.read_csv('Conformation_A001_r0.8.txt', names=conf_names, delim_whitespace=True)
 conf08 = conf8.iloc[0::13,:]
 conf08_df = conf08.reset_index(drop=True)
@@ -70,12 +122,26 @@ print("Conf0.8 shape before filter: ", conf08.shape)
 df08 = conf08_df.loc[conf08_df['z'] <= attach_lim]
 print("Conf0.8 shape after filter: ", df08.shape)
 
+conf85 = pd.read_csv('Conformation_A001_r0.85.txt', names=conf_names, delim_whitespace=True)
+conf085 = conf85.iloc[0::13,:]
+conf085_df = conf085.reset_index(drop=True)
+print("Conf0.85 shape before filter: ", conf085.shape)
+df085 = conf085_df.loc[conf085_df['z'] <= attach_lim]
+print("Conf0.85 shape after filter: ", df085.shape)
+
 conf9 = pd.read_csv('Conformation_A001_r0.9.txt', names=conf_names, delim_whitespace=True)
 conf09 = conf9.iloc[0::13,:]
 conf09_df = conf09.reset_index(drop=True)
 print("Conf0.9 shape before filter: ", conf09.shape)
 df09 = conf09_df.loc[conf09_df['z'] <= attach_lim]
 print("Conf0.9 shape after filter: ", df09.shape)
+
+conf95 = pd.read_csv('Conformation_A001_r0.95.txt', names=conf_names, delim_whitespace=True)
+conf095 = conf95.iloc[0::13,:]
+conf095_df = conf095.reset_index(drop=True)
+print("Conf0.95 shape before filter: ", conf095.shape)
+df095 = conf095_df.loc[conf095_df['z'] <= attach_lim]
+print("Conf0.95 shape after filter: ", df095.shape)
 
 conf10 = pd.read_csv('Conformation_A001_r1.0.txt', names=conf_names, delim_whitespace=True)
 conf10 = conf10.iloc[0::13,:]
