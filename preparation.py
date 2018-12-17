@@ -6,6 +6,7 @@ from termcolor import colored
 from scipy.stats import norm
 from mpl_toolkits import mplot3d
 from IPython.display import HTML
+import matplotlib.animation as anim
 
 font = {'family': 'serif',
         'color':  'darkred',
