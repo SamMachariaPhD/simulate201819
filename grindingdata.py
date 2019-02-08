@@ -1,7 +1,12 @@
 #After simulation, get inside each folder.
 #Extract the binding motor number.
 #Extract speed and its deviation.
-#Sort data and do instructed analysis
+#Sort data, do instructed analysis, and later make a latex doc. using ready made template.
+#Inputs => 10 complete simulations, say, R=1.0 to 1.0
+#Outputs => 1. grinding_data.csv having paths for simulation, binding motors, speed and average speed.
+#           2. binding motor vs. average speed plots
+#           3. leading tip plots
+#           4. sorted data outputs
 #Sam. Prof. Nitta Lab.
 
 import os,glob,csv,time
@@ -32,9 +37,9 @@ no = 1
 try:
     os.remove(filename+'.csv') # if program run twice, remove the previously saved file.
     os.remove('bmotors.csv')
-    os.remove('summarydata.csv'); os.remove('bmd01.csv'); os.remove('bmd02.csv')
-    os.remove('bmd03.csv'); os.remove('bmd04.csv'); os.remove('bmd05.csv'); os.remove('bmd06.csv')
-    os.remove('bmd07.csv'); os.remove('bmd08.csv'); os.remove('bmd09.csv'); os.remove('bmd10.csv')
+    os.remove('summarydata.csv'); os.remove('bmd1.csv'); os.remove('bmd2.csv')
+    os.remove('bmd3.csv'); os.remove('bmd4.csv'); os.remove('bmd5.csv'); os.remove('bmd6.csv')
+    os.remove('bmd7.csv'); os.remove('bmd8.csv'); os.remove('bmd9.csv'); os.remove('bmd10.csv')
 except (OSError, RuntimeError, TypeError, NameError):
     pass
 
@@ -124,41 +129,41 @@ dfsum = pd.concat([r,sumdata],axis=1)
 dfsum.columns = ['r','avSpeed','sdev']
 dfsum.to_csv('summarydata.csv',index=False)
 
-bmd01 = df.iloc[1:31]
-bmd01.columns = ['tym','bm','vel']
-bmd01.to_csv('bmd01.csv',index=False)
+bmd1 = df.iloc[1:31]
+bmd1.columns = ['tym','bm','vel']
+bmd1.to_csv('bmd1.csv',index=False)
 
-bmd02 = df.iloc[35:65] #jump 4 from where you left, +30
-bmd02.columns = ['tym','bm','vel']
-bmd02.to_csv('bmd02.csv',index=False)
+bmd2 = df.iloc[35:65] #jump 4 from where you left, +30
+bmd2.columns = ['tym','bm','vel']
+bmd2.to_csv('bmd2.csv',index=False)
 
-bmd03 = df.iloc[69:99]
-bmd03.columns = ['tym','bm','vel']
-bmd03.to_csv('bmd03.csv',index=False)
+bmd3 = df.iloc[69:99]
+bmd3.columns = ['tym','bm','vel']
+bmd3.to_csv('bmd3.csv',index=False)
 
-bmd04 = df.iloc[103:133]
-bmd04.columns = ['tym','bm','vel']
-bmd04.to_csv('bmd04.csv',index=False)
+bmd4 = df.iloc[103:133]
+bmd4.columns = ['tym','bm','vel']
+bmd4.to_csv('bmd4.csv',index=False)
 
-bmd05 = df.iloc[137:167]
-bmd05.columns = ['tym','bm','vel']
-bmd05.to_csv('bmd05.csv',index=False)
+bmd5 = df.iloc[137:167]
+bmd5.columns = ['tym','bm','vel']
+bmd5.to_csv('bmd5.csv',index=False)
 
-bmd06 = df.iloc[171:201]
-bmd06.columns = ['tym','bm','vel']
-bmd06.to_csv('bmd06.csv',index=False)
+bmd6 = df.iloc[171:201]
+bmd6.columns = ['tym','bm','vel']
+bmd6.to_csv('bmd6.csv',index=False)
 
-bmd07 = df.iloc[205:235]
-bmd07.columns = ['tym','bm','vel']
-bmd07.to_csv('bmd07.csv',index=False)
+bmd7 = df.iloc[205:235]
+bmd7.columns = ['tym','bm','vel']
+bmd7.to_csv('bmd7.csv',index=False)
 
-bmd08 = df.iloc[239:269]
-bmd08.columns = ['tym','bm','vel']
-bmd08.to_csv('bmd08.csv',index=False)
+bmd8 = df.iloc[239:269]
+bmd8.columns = ['tym','bm','vel']
+bmd8.to_csv('bmd8.csv',index=False)
 
-bmd09 = df.iloc[273:303]
-bmd09.columns = ['tym','bm','vel']
-bmd09.to_csv('bmd09.csv',index=False)
+bmd9 = df.iloc[273:303]
+bmd9.columns = ['tym','bm','vel']
+bmd9.to_csv('bmd9.csv',index=False)
 
 bmd10 = df.iloc[307:337]
 bmd10.columns = ['tym','bm','vel']
@@ -180,157 +185,157 @@ plt.savefig('summary.svg',bbox_inches='tight', format='svg',dip=500)
 plt.close()
 
 columns=['tym','bm','vel']
-bmd01 = pd.read_csv('bmd01.csv',skiprows=[0],header=None,names=columns)
+bmd1 = pd.read_csv('bmd1.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd01['tym'],bmd01['bm'], label='Change in binding motor')
+ax1.plot(bmd1['tym'],bmd1['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd01['tym'],bmd01['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd01['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd1['tym'],bmd1['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd1['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd01.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd1.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-bmd02 = pd.read_csv('bmd02.csv',skiprows=[0],header=None,names=columns)
+bmd2 = pd.read_csv('bmd2.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd02['tym'],bmd02['bm'], label='Change in binding motor')
+ax1.plot(bmd2['tym'],bmd2['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd02['tym'],bmd02['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd02['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd2['tym'],bmd2['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd2['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd02.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd2.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-bmd03 = pd.read_csv('bmd03.csv',skiprows=[0],header=None,names=columns)
+bmd3 = pd.read_csv('bmd3.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd03['tym'],bmd03['bm'], label='Change in binding motor')
+ax1.plot(bmd3['tym'],bmd3['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd03['tym'],bmd03['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd03['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd3['tym'],bmd3['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd3['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd03.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd3.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-bmd04 = pd.read_csv('bmd04.csv',skiprows=[0],header=None,names=columns)
+bmd4 = pd.read_csv('bmd4.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd04['tym'],bmd04['bm'], label='Change in binding motor')
+ax1.plot(bmd4['tym'],bmd4['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd04['tym'],bmd04['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd04['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd4['tym'],bmd4['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd4['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd04.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd4.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-bmd05 = pd.read_csv('bmd05.csv',skiprows=[0],header=None,names=columns)
+bmd5 = pd.read_csv('bmd5.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd05['tym'],bmd05['bm'], label='Change in binding motor')
+ax1.plot(bmd5['tym'],bmd5['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd05['tym'],bmd05['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd05['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd5['tym'],bmd5['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd5['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd05.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd5.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-bmd06 = pd.read_csv('bmd06.csv',skiprows=[0],header=None,names=columns)
+bmd6 = pd.read_csv('bmd6.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd06['tym'],bmd06['bm'], label='Change in binding motor')
+ax1.plot(bmd6['tym'],bmd6['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd06['tym'],bmd06['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd06['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd6['tym'],bmd6['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd6['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd06.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd6.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-bmd07 = pd.read_csv('bmd07.csv',skiprows=[0],header=None,names=columns)
+bmd7 = pd.read_csv('bmd7.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd07['tym'],bmd07['bm'], label='Change in binding motor')
+ax1.plot(bmd7['tym'],bmd7['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd07['tym'],bmd07['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd07['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd7['tym'],bmd7['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd7['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd07.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd7.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-bmd08 = pd.read_csv('bmd08.csv',skiprows=[0],header=None,names=columns)
+bmd8 = pd.read_csv('bmd8.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd08['tym'],bmd08['bm'], label='Change in binding motor')
+ax1.plot(bmd8['tym'],bmd8['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd08['tym'],bmd08['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd08['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd8['tym'],bmd8['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd8['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd08.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd8.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-bmd09 = pd.read_csv('bmd09.csv',skiprows=[0],header=None,names=columns)
+bmd9 = pd.read_csv('bmd9.csv',skiprows=[0],header=None,names=columns)
 fig, ax1 = plt.subplots(figsize=(10,6), dpi=500)
 ax1.set_xlabel('Time (sec)', fontdict=font)
 ax1.set_ylabel('Number of binding motors', fontdict=font)
-ax1.plot(bmd09['tym'],bmd09['bm'], label='Change in binding motor')
+ax1.plot(bmd9['tym'],bmd9['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
-ax2.plot(bmd09['tym'],bmd09['vel'], 'g', label='Change in speed')
-ax2.axhline(bmd09['vel'].mean(), linestyle='--', color='g', label='Mean speed')
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
+ax2.plot(bmd9['tym'],bmd9['vel'], 'g', label='Change in speed')
+ax2.axhline(bmd9['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
 ax2.tick_params('y', colors='g'); ax2.set_ylim(bottom=0)
 plt.title('Binding motors vs. average speed', fontdict=font)
-plt.savefig('bmd09.svg',bbox_inches='tight', format='svg',dip=300)
+plt.savefig('bmd9.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
 bmd10 = pd.read_csv('bmd10.csv',skiprows=[0],header=None,names=columns)
@@ -341,7 +346,7 @@ ax1.plot(bmd10['tym'],bmd10['bm'], label='Change in binding motor')
 ax1.legend(loc='upper left'); ax1.set_ylim(bottom=0)
 ax2 = ax1.twinx()
 ax2.set_xlabel('Time (sec)', fontdict=font)
-ax2.set_ylabel('Velocity ($\mu m/sec$)', fontdict=font)
+ax2.set_ylabel('Speed ($\mu m/sec$)', fontdict=font)
 ax2.plot(bmd10['tym'],bmd10['vel'], 'g', label='Change in speed')
 ax2.axhline(bmd10['vel'].mean(), linestyle='--', color='g', label='Mean speed')
 ax2.legend(loc='upper right')
