@@ -46,7 +46,7 @@
 > If there is an error, quit pvpython and install the above libraries. For example:
     $ sudo apt-get install paraview
 
-> To run simulations, run '$ python3 simulate.py'
+> To run simulations, run '$ python3 simulate.py' or '$ time python3 simulate.py' if you want to know how much time the simulation took.
 
 
 #--------------------INSTRUCTIONS TO RUN PLOT.PY OR FILM.PY ONLY-------------------
