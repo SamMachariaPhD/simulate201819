@@ -9,7 +9,7 @@ import scipy.stats as stats
 from scipy.interpolate import interp1d
 plt.style.use('default')
 
-confName = 'Conformation_30sec1.txt'
+confName = 'Conformation_A001.txt'
 v=7.12534; dt=0.1
 
 Conf = pd.read_csv(confName, names=['t','x','y','z'], delim_whitespace=True)
@@ -64,7 +64,8 @@ while il>0:
         #print('i = ',i)
     ds = pd.read_csv('ds'+str(no)+'.csv',names=['ds'])
     Ds = float(ds.mean())
-    rows = np.array([s,Ds])
+    s_ = v*dt*s
+    rows = np.array([s_,Ds])
     with open('Ds.csv','a') as fd:
         writer = csv.writer(fd)
         writer.writerow(rows)
@@ -75,8 +76,7 @@ while il>0:
 Ds = pd.read_csv('Ds.csv',names=['s','Ds'])
 
 plt.figure(figsize=(10,8))
-plt.scatter(v*dt*Ds['s'],Ds['Ds'],facecolors='none',edgecolors='b', label='Filament 1')
-#plt.scatter(v*dt*Ds2['s'],Ds2['Ds'],facecolors='none',edgecolors='b', label='Filament 2')
+plt.scatter(Ds['s'],Ds['Ds'],facecolors='none',edgecolors='b', label='Filament 1')
 plt.title('S vs <cos $\Delta \Theta $>')
 plt.xlabel('S'); plt.ylabel('<cos $\Delta \Theta $>')
 plt.legend(loc='best')
@@ -86,15 +86,14 @@ plt.close()
 tenth = int(np.around(Ds.shape[0]/10,0)); Ds=Ds[0:tenth]
 
 plt.figure(figsize=(10,8))
-plt.scatter(v*dt*Ds['s'],Ds['Ds'],facecolors='none',edgecolors='b', label='Filament 1')
-#plt.scatter(v*dt*Ds2['s'],Ds2['Ds'],facecolors='none',edgecolors='b', label='Filament 2')
+plt.scatter(Ds['s'],Ds['Ds'],facecolors='none',edgecolors='b', label='Filament 1')
 plt.title('S vs <cos $\Delta \Theta $>')
 plt.xlabel('S'); plt.ylabel('<cos $\Delta \Theta $>')
 plt.legend(loc='best')
 plt.savefig('tenthPersistence.svg',bbox_inches='tight', format='svg',dip=300)
 plt.close()
 
-x = v*dt*Ds['s']
+x = Ds['s']
 y = np.log(Ds['Ds'])
 plt.figure(figsize=(10,8))
 plt.scatter(x,y,facecolors='none',edgecolors='b')
