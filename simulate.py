@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # prepared by Sam. feel free to consult (sirmaxford@gmail.com).
 import fileinput, sys, shutil, os, time, socket, subprocess
 
@@ -61,9 +62,9 @@ while simulation_runs > 0:
         sys.stdout.write(line.replace('Motor_Density = 3000.0', 'Motor_Density = '+str(MD_value)))
     #print ("\n=> Param. file in %s successfully updated." % new_dir)
     #print ("\n=> Simulation program started!: %s" % new_dir)
-    subprocess.call("./autocomp_py.sh", shell=True)
+    subprocess.call("ifort mt.f90 MotilityAssayActin2MotorsParameters_v3.f90 MotilityAssayConfinements_v1.f90 MotilityAssaySubstrateDeformation_v2.f90 MotilityAssayForceForceFunctions_v2.f90 MotilityAssayActin2MotorsMain_v6.f90", shell=True) # "./autocomp_py.sh"
     #print ("=> Programs successfully compiled:\n%s " % files)
-    subprocess.call("./autorun_py.sh", shell=True)
+    subprocess.call("ulimit -s unlimited;./a.out", shell=True) # "./autorun_py.sh"
     print ("\n=> Programs in %s have successfully run complete!\n" % new_dir)
     simulation_runs = simulation_runs-1
     simulations_counter = simulations_counter+1 #simulation_counter for making dirs and prog. progress

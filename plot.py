@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # prepared by Sam. feel free to consult (sirmaxford@gmail.com).
 import fileinput, sys, shutil, os, time, socket, subprocess
 import matplotlib; matplotlib.use('Agg') #set matplotlib to not use the Xwindows backend
@@ -43,7 +44,7 @@ plt.text(x1, y2, 'Vel_SD = ', fontdict=font); plt.text(x2, y2, '%.5f'%vSD, fontd
 plt.plot(df['x_tip'],df['y_tip'], label='Leading tip', color='green', marker='o', linestyle='dashed', linewidth=2, markersize=7)
 plt.xlabel('X', fontdict=font); plt.ylabel('Y', fontdict=font)
 plt.title('Actin Filament Movement '+plot_name); plt.legend(loc='upper left'); plt.grid()
-plt.savefig(results_dir+'/'+plot_name+'.svg', format='svg', dpi=1200)
-plt.savefig(results_dir+'/'+plot_name+'.png', format='png')
+plt.savefig(results_dir+'/'+plot_name+'.svg', bbox_inches='tight', format='svg', dpi=1200)
+plt.savefig(results_dir+'/'+plot_name+'.png', bbox_inches='tight', format='png')
 
 print ("=> %s successfully saved. Done!\n" %results_dir)

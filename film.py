@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # prepared by Sam. feel free to consult (sirmaxford@gmail.com)
 import fileinput, sys, shutil, os, time, socket, subprocess, glob
 from paraview.simple import *
