@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Plot persistence length graphs
 # Sam
 

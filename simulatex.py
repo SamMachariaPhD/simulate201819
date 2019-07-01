@@ -61,10 +61,10 @@ while simulation_runs > 0:
         sys.stdout.write(line.replace('Motor_Density = 3000.0', 'Motor_Density = '+str(MD_value)))
     #print ("\n=> Param. file in %s successfully updated." % new_dir)
     #print ("\n=> Simulation program started!: %s" % new_dir)
-    subprocess.call("ifort mt.f90 MotilityAssayActin2MotorsParameters_v3.f90 MotilityAssayConfinements_v1.f90 MotilityAssaySubstrateDeformation_v2.f90 MotilityAssayForceForceFunctions_v2.f90 MotilityAssayActin2MotorsMain_v6.f90", shell=True)
+    subprocess.call("ifort -openmp mt.f90 MotilityAssayActin2MotorsParameters_v3.f90 MotilityAssayConfinements_v1.f90 MotilityAssaySubstrateDeformation_v2.f90 MotilityAssayForceForceFunctions_v2.f90 MotilityAssayActin2MotorsMain_v6.f90", shell=True)
     #print ("=> Programs successfully compiled:\n%s " % files)
     tic=time.time()
-    subprocess.call("ulimit -s unlimited;./a.out", shell=True)
+    subprocess.call("ulimit -s unlimited;export OMP_NUM_THREADS=4;./a.out", shell=True)
     toc=time.time()
     tym=toc-tic
     print("\nTotal time is sec. = ", file=open('pyout.txt','a'))

@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 # prepared by Sam. feel free to consult (sirmaxford@gmail.com)
 import fileinput, sys, shutil, os, time, socket, subprocess, glob
 from paraview.simple import *
@@ -72,7 +71,7 @@ MotorSpecie2Display.DiffuseColor = [0.69, 0.69, 0.0]
 annotateTime1 = AnnotateTime()
 SetActiveSource(annotateTime1)
 annotateTime1Display = Show(annotateTime1, renderView1)
-annotateTime1.Format = 'Time: 3 sec [%.2f]'
+annotateTime1.Format = 'Time: 60 sec. [%.2f]'
 annotateTime1Display = Show(annotateTime1, renderView1)
 
 # current camera placement for renderView1

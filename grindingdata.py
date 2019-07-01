@@ -75,7 +75,7 @@ for i in dirlist:
     v=DD/(10*dt); Av_vel = np.mean(v)
     vSD=np.sum(((v-Av_vel)**2)/(np.size(v)-1)); vSD=np.sqrt(vSD)
     av_sd = [str(Av_vel),str(vSD)]
-    v1 = v.reshape(30,1)
+    v1 = v.reshape(v.shape[0],1) # v.shape[0] to generalize; rather than just 30 for 3 sec simul
     #print(av_sd)
     v1 = pd.DataFrame(v1)
     #----------------------------
