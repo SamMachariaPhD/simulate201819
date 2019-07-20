@@ -1,10 +1,14 @@
 program beadRodPolymer
+    use parameters
+    use mtmod
+    use planarTrackConfinement
+    use uniformForceX
 implicit none
 
 !==========================================INITIALIZATION======================================!
 
 integer :: seedAssay, iAssay, i, j, ii, jj, jjj, jContact, areaCounter, iArea, eraseCounter, iErase, &
-eraseCounter, iErase, numIteration, outputFileCounter, iInt, counterBuffer, iSpecies
+numIteration, outputFileCounter, iInt, counterBuffer, iSpecies
 integer(kind=range15) :: Ts, Ip, numParticles
 integer(kind=range15), dimension(maxAreaNum) :: addedParticleNum
 integer, dimension(maxNumParticles) :: motorSpecies
@@ -14,7 +18,7 @@ logical :: stateConstraint, stateConfinement, stateConfinementParticle
 real(kind=DP) :: initialAngle, ur1, ur2, ur3, normRandParticles, interceptContact, xContact, yContact, zContact, &
 disHeadTail, projHeadTail, gammaBead, dBead, gammaParticle, vMotor, intercept, xcm, ycm
 real(kind=DP), dimension(maxAreaNum) :: areaOriginX, areaOriginY, areaOriginUx, areaOriginUy
-real(kind=DP), dimension(numBeads) :: xi, yi, zi, xiTemp, yiTemp, yiTemp, ziTemp, fiX, fiY, fiZ, &
+real(kind=DP), dimension(numBeads) :: xi, yi, zi, xiTemp, yiTemp, ziTemp, fiX, fiY, fiZ, &
 normRandVectorBeads, xiNormRandVectorBeads, yiNormRandVectorBeads, ziNormRandVectorBeads
 real(kind=DP), dimension(maxNumParticles) :: xp, yp, zp, normRandVectorParticles, xpBuffer, &
 ypBuffer, zpBuffer, elongation
@@ -137,7 +141,7 @@ do j=1, numBeads
     write(11,'(3F25.15)') x(j,numMol), y(j,numMol), z(j,numMol)
 end do
 do i=1, numMol-1
-    write(15,'(3F14.6)',advance="no") x(numBeads,I), y(numBeads,I), z(numBeads,I)
+    write(15,'(3F14.6)',advance="no") x(numBeads,i), y(numBeads,i), z(numBeads,i)
 end do
 write(15,'(3F14.6)') x(numBeads,numMol), y(numBeads,numMol), z(numBeads,numMol)
 do i=1, numMol-1
@@ -173,7 +177,7 @@ write(23,*) Ts, areaCounter, eraseCounter
 write(outFileNameF,'(A,I3.3,A,I7.7,A)') 'filamentA', iAssay, 'T', outputFileCounter, '.vtk'
 open(33,file=outFileNameF)
 write(33,'(A)') "# vtk dataFile version 2.0"
-write(33,'(A, 17)') "filament: outputFileCounter = ", outputFileCounter
+write(33,'(A, I7)') "filament: outputFileCounter = ", outputFileCounter
 write(33,'(A)') "ASCII"
 write(33,'(A)') "dataset unstructured grid"
 write(33,'(A, I10, A)') "points", numMol*numBeads, "float"
@@ -188,7 +192,7 @@ do i=1, numMol
 end do
 write(33,'(A, I10)') "cellTypes", numMol
 do i=1, numMol
-    write(33,'i3') 4
+    write(33,'(I3)') 4
 end do
 close(33)
 write(outFileNameP,'(A,I3.3,A,I7.7,A)') 'particleA', iAssay, 'T', outputFileCounter, '.vtk'
@@ -353,8 +357,7 @@ numIteration=0
 stateConstraint=.FALSE.
 stateConfinement=.FALSE.
 iterationConstraintConfinement: do
-if(stateConstraint .and. stateConfinement) exit
-iterationConstraintConfinement
+if(stateConstraint .and. stateConfinement) exit iterationConstraintConfinement
 if(numIteration > maxNumIteration) then
     write(*,*) "too many iterations!"
     exit iterationConstraintConfinement
@@ -384,8 +387,8 @@ do Ip=1, numParticles
         call motorStateConv(x,y,z,fMotorX(Ip),fMotorY(Ip),fMotorZ(Ip),contactState(:,Ip),releaseADP(Ip))
     end if
 end do
-if(mod(Ts,AreaRenewDiv) == 0) then
-    call renewMotorPopulation(x,y,z,xp,yp,zp,contactState,candidateList,addedParticleNum,areaCounter,eraseCounter,areaOriginX,areaOriginY,areaOriginUx,areaOriginUy,numParticles,motorSpecies)
+if(mod(Ts,areaRenewDiv) == 0) then
+    call renewMotorPopulation(x,y,xp,yp,zp,contactState,candidateList,addedParticleNum,areaCounter,eraseCounter,areaOriginX,areaOriginY,areaOriginUx,areaOriginUy,numParticles,motorSpecies)
 end if
 tempContact=0.0_DP
 call checkMotorFilamentContact(x,y,z,xp,yp,zp,numParticles,candidateList,contactState,tempContact)
@@ -398,6 +401,7 @@ end do
 call calculateForceMotor(x,y,z,xp,yp,zp,contactState,fMotorX,fMotorY,fMotorZ,numParticles,elongation)
 do Ip=1, numParticles
     call motorForcedDetachment(fMotorX(Ip),fMotorY(Ip), fMotorZ(Ip), contactState(:,Ip), elongation(Ip))
+end do
 call calculateForceBead(contactState, forceBeadX, forceBeadY, forceBeadZ, fMotorX, fMotorY, fMotorZ, numParticles)
 fX=forceBending(x)+forceBeadX
 fY=forceBending(y)+forceBeadY
@@ -405,7 +409,7 @@ fZ=forceBending(z)+forceBeadZ
 fX=forceBending(x)+forceBeadX+extFx(Ts,x,y,z)
 fY=forceBending(y)+forceBeadY+extFy(Ts,x,y,z)
 fZ=forceBending(z)+forceBeadZ+extFz(Ts,x,y,z)
-if(mod(Ts,OutPutDiv)==0) then
+if(mod(Ts,outputDiv)==0) then
     outputFileCounter=outputFileCounter+1
     do j=1, numBeads
         write(11, '(I10)', advance="no") Ts
@@ -435,9 +439,9 @@ if(mod(Ts,OutPutDiv)==0) then
                 yContact=y(jContact,1)+interceptContact*(y(jContact,1)-y(jContact-1,1))
                 zContact=z(jContact,1)+interceptContact*(z(jContact,1)-z(jContact-1,1))
             else
-                xContact=x(jContact,1)+interceptContact*(x(jContact+1,1)-(x(jContact+1,1)-x(jContact,1))
-                yContact=y(jContact,1)+interceptContact*(y(jContact+1,1)-(y(jContact+1,1)-y(jContact,1))
-                zContact=z(jContact,1)+interceptContact*(z(jContact+1,1)-(z(jContact+1,1)-y(jContact,1))
+                xContact=x(jContact,1)+interceptContact*(x(jContact+1,1)-x(jContact,1))
+                yContact=y(jContact,1)+interceptContact*(y(jContact+1,1)-y(jContact,1))
+                zContact=z(jContact,1)+interceptContact*(z(jContact+1,1)-z(jContact,1))
             end if
             write(20,'(2I10, 7F14.6, I2)') Ts, Ip, contactState(1,Ip), xContact, yContact, zContact, xp(Ip), yp(Ip), zp(Ip), motorSpecies(Ip)
         end if
@@ -471,6 +475,7 @@ if(mod(Ts,OutPutDiv)==0) then
     close(33)
     write(outFileNameP,'(A,I3.3,A,I7.7,A)') 'particleA', iAssay, 'T', outputFileCounter, '.vtk'
     open(34,file=outFileNameP)
+    write(34,'(A)') "# vtk DataFile version 2.0"
     write(34,'(A,I7)') "particle: outputFileCounter = ", outputFileCounter
     write(34,'(A)') "ASCII"
     write(34,'(A)') "dataset unstructured grid"
@@ -485,7 +490,7 @@ if(mod(Ts,OutPutDiv)==0) then
     write(34,'(A, I10)') "cell types", numParticles
     do Ip=1, numParticles
         write(34,'(I3)') 1
-    end
+    end do
     close(34)
     write(outFileNameP,'(A,I3.3,A,I7.7,A)') 'mtPlusEndA', iAssay, 'T', outputFileCounter, '.vtk'
     open(35,file=outFileNameP)
@@ -612,7 +617,7 @@ end subroutine normRNDVector
 subroutine makeList(x,y,z,xp,yp,zp,contactState,candidateList)
     use parameters, only : DP, maxNumParticles, numMol, numBeads, bondLength, merginList
     real(kind=DP), dimension(numBeads,numMol),intent(in) :: x,y,z
-    real(kind=DP), dimension(maxNumParticles),intent(in) :: xp,xy,xz
+    real(kind=DP), dimension(maxNumParticles),intent(in) :: xp,yp,zp
     real(kind=DP), dimension(numMol,maxNumParticles), intent(in) :: contactState
     integer, dimension(numMol*numBeads, maxNumParticles), intent(out) :: candidateList
     real(kind=DP) :: intercept, sqDistance
@@ -701,7 +706,7 @@ subroutine calculateForceMotor(x,y,z,xp,yp,zp,contactState,fMotorX,fMotorY,fMoto
     real(kind=DP), dimension(maxNumParticles), intent(out) :: fMotorX, fMotorY, fMotorZ
     integer(kind=range15), intent(in) :: numParticles
     real(kind=DP) :: interceptContact, xContact, yContact, zContact
-    real(kind=DP) :: dimension(maxNumParticles), intent(out) :: elongation
+    real(kind=DP), dimension(maxNumParticles), intent(out) :: elongation
     integer(kind=range15) :: Ip
     integer :: ii, jContact
     fMotorX=0.0_DP
@@ -856,10 +861,8 @@ subroutine renewMotorPopulation(x,y,xp,yp,zp,contactState,candidateList,addedPar
     ycm=sum(y(:,1))/dble(numBeads)
     nearBoundary= .false.
     do jj=1, numBeads
-        if(dabs((x(jj,1)-areaOriginX(areaCounter))*areaOriginUx(areaCounter)+(y(jj,1)-areaOriginY(areaCounter))*areaOriginUy(areaCounter))>=0.5_DP*horizontalLength-0.5_DP*dble(numBeads-1)*bondLength-1.0_DP)
-        nearBoundary=.true.
-        if(dabs(-(x(jj,1)-areaOriginX(areaCounter))*areaOriginUy(areaCounter)+(y(jj,1)-areaOriginY(areaCounter))*areaOriginUx(areaCounter))>=0.5_DP*verticalLength-0.5_DP*dble(numBeads-1)*bondLength-1.0_DP)
-        nearBoundary=.true.
+        if(dabs((x(jj,1)-areaOriginX(areaCounter))*areaOriginUx(areaCounter)+(y(jj,1)-areaOriginY(areaCounter))*areaOriginUy(areaCounter))>=0.5_DP*horizontalLength-0.5_DP*dble(numBeads-1)*bondLength-1.0_DP) nearBoundary=.true.
+        if(dabs(-(x(jj,1)-areaOriginX(areaCounter))*areaOriginUy(areaCounter)+(y(jj,1)-areaOriginY(areaCounter))*areaOriginUx(areaCounter))>=0.5_DP*verticalLength-0.5_DP*dble(numBeads-1)*bondLength-1.0_DP) nearBoundary=.true.
     end do
     if(nearBoundary == .true.) then
         areaCounter=areaCounter+1
