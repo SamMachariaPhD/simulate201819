@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from termcolor import colored
 from scipy.stats import norm
+import matplotlib.mlab as mlab
 from mpl_toolkits import mplot3d
 from IPython.display import HTML
 import matplotlib.animation as anim
@@ -176,70 +177,70 @@ df10 = conf10_df.iloc[0::10, :]
 
 # bm -- binding motor number, bmd -- binding motor conformation data
 column_name = ['b_m']
-bm01 = pd.read_csv('binding_motors_r0.1.csv', names=column_name)
-bm01 = bm01.iloc[0::10,:]
+bm_01 = pd.read_csv('binding_motors_r0.1.csv', names=column_name)
+bm01 = bm_01.iloc[0::10,:]
 bm01 = bm01.drop(bm01.index[30])
 bmd01 = df01[['x','y']]
 #bmd01 = bmd01.iloc[0::2,:]
 
-bm02 = pd.read_csv('binding_motors_r0.2.csv', names=column_name)
-bm02 = bm02.iloc[0::10,:]
+bm_02 = pd.read_csv('binding_motors_r0.2.csv', names=column_name)
+bm02 = bm_02.iloc[0::10,:]
 bm02 = bm02.drop(bm02.index[30])
 bmd02 = df02[['x','y']]
 #bmd02 = bmd02.iloc[0::2,:]
 
 
-bm03 = pd.read_csv('binding_motors_r0.3.csv', names=column_name)
-bm03 = bm03.iloc[0::10,:]
+bm_03 = pd.read_csv('binding_motors_r0.3.csv', names=column_name)
+bm03 = bm_03.iloc[0::10,:]
 bm03 = bm03.drop(bm03.index[30])
 bmd03 = df03[['x','y']]
 #bmd03 = bmd03.iloc[0::2,:]
 
 
-bm04 = pd.read_csv('binding_motors_r0.4.csv', names=column_name)
-bm04 = bm04.iloc[0::10,:]
+bm_04 = pd.read_csv('binding_motors_r0.4.csv', names=column_name)
+bm04 = bm_04.iloc[0::10,:]
 bm04 = bm04.drop(bm04.index[30])
 bmd04 = df04[['x','y']]
 #bmd04 = bmd04.iloc[0::2,:]
 
 
-bm05 = pd.read_csv('binding_motors_r0.5.csv', names=column_name)
-bm05 = bm05.iloc[0::10,:]
+bm_05 = pd.read_csv('binding_motors_r0.5.csv', names=column_name)
+bm05 = bm_05.iloc[0::10,:]
 bm05 = bm05.drop(bm05.index[30])
 bmd05 = df05[['x','y']]
 #bmd05 = bmd05.iloc[0::2,:]
 
 
-bm06 = pd.read_csv('binding_motors_r0.6.csv', names=column_name)
-bm06 = bm06.iloc[0::10,:]
+bm_06 = pd.read_csv('binding_motors_r0.6.csv', names=column_name)
+bm06 = bm_06.iloc[0::10,:]
 bm06 = bm06.drop(bm06.index[30])
 bmd06 = df06[['x','y']]
 #bmd06 = bmd06.iloc[0::2,:]
 
 
-bm07 = pd.read_csv('binding_motors_r0.7.csv', names=column_name)
-bm07 = bm07.iloc[0::10,:]
+bm_07 = pd.read_csv('binding_motors_r0.7.csv', names=column_name)
+bm07 = bm_07.iloc[0::10,:]
 bm07 = bm07.drop(bm07.index[30])
 bmd07 = df07[['x','y']]
 #bmd07 = bmd07.iloc[0::2,:]
 
 
-bm08 = pd.read_csv('binding_motors_r0.8.csv', names=column_name)
-bm08 = bm08.iloc[0::10,:]
+bm_08 = pd.read_csv('binding_motors_r0.8.csv', names=column_name)
+bm08 = bm_08.iloc[0::10,:]
 bm08 = bm08.drop(bm08.index[30])
 bmd08 = df08[['x','y']]
 #bmd08 = bmd08.iloc[0::2,:]
 
 
-bm09 = pd.read_csv('binding_motors_r0.9.csv', names=column_name)
-bm09 = bm09.iloc[0::10,:]
+bm_09 = pd.read_csv('binding_motors_r0.9.csv', names=column_name)
+bm09 = bm_09.iloc[0::10,:]
 bm09 = bm09.drop(bm09.index[30])
 bmd09 = df09[['x','y']]
 #bmd09 = bmd09.iloc[0::2,:]
 
 
-bm10 = pd.read_csv('binding_motors_r1.0.csv', names=column_name)
-bm10 = bm10.iloc[0::10,:]
+bm_10 = pd.read_csv('binding_motors_r1.0.csv', names=column_name)
+bm10 = bm_10.iloc[0::10,:]
 bm10 = bm10.drop(bm10.index[30])
 bmd10 = df10[['x','y']]
 #bmd10 = bmd10.iloc[0::2,:]
