@@ -8,6 +8,7 @@ import matplotlib.mlab as mlab
 from mpl_toolkits import mplot3d
 from IPython.display import HTML
 import matplotlib.animation as anim
+from scipy.interpolate import spline
 
 font = {'family': 'serif',
         'color':  'darkred',
