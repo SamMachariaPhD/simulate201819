@@ -28,3 +28,4 @@ try:
 except (Exception, e):
     pass
     print("Sorry, 'del.py' has an error.")
+
