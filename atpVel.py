@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 current_path = os.getcwd()
-filename = 'avSpeed_StdDev'
+filename = 'spd_std273ATP50'
 DtFile=0.01
 
 dirlist = glob.glob(current_path+'/*/')
