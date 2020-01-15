@@ -15,7 +15,7 @@ count = 0.1 # smallest motor density
 seed = '273ATP50'
 
 dirlist = glob.glob(current_path+'/*/')
-dirlist = sorted(dirlist, key=lambda x:x[-18:])
+dirlist = sorted(dirlist, key=lambda x:x[-25:])
 
 for i in dirlist:
     os.chdir(i)
