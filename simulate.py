@@ -91,7 +91,7 @@ try:
             shutil.copy(f, dir_name+'/'+new_dir)
         os.chdir(dir_name+'/'+new_dir)
         for i, line in enumerate(fileinput.input(ploting_file, inplace=1)):
-            sys.stdout.write(line.replace("'actin_graph'", "'"+new_dir+"'"))
+            sys.stdout.write(line.replace("'Graph'", "'"+new_dir+"'"))
         os.system('python3 plot.py')
         plot_runs = plot_runs-1
         plot_counter = plot_counter+1
