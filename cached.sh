@@ -1,3 +1,4 @@
+#!/bin/bash
 # Remove some files from remote repo but not on local repo
 # Sam Macharia
 git rm --cached *.csv # ignore all .csv files
